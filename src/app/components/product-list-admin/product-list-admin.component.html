@@ -1,0 +1,123 @@
+<div class="main-content">
+    <!-- add product to list -->
+    <div class="section-content section-content-p30">
+        <div class="container-fluid">
+            <form class="form-inline" [formGroup]="addProduct_form_group" (ngSubmit)="onSubmit()">
+                <div class="form-row align-items-center">
+                    <div formGroupName="product" class="form-group">
+                        <div class="form-group">
+                            <label>Category: </label>
+                            <select class="form-select" formControlName="category_id">
+                                <option *ngFor="let category of categories" [value]="category.id">
+                                    {{category.id}}
+                                </option>
+                            </select>
+                            <div *ngIf="category_id.invalid && (category_id.dirty || category_id.touched)"
+                                class="alert alert-danger mt-1">
+                                <div *ngIf="category_id.errors?.['required']">
+                                    Category is required.
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>SKU: </label>
+                            <input formControlName="sku" type="text" class="form-control">
+                            <div *ngIf="sku.invalid && (sku.dirty||sku.touched)" class="alert alert-danger mt-1">
+                                <div *ngIf="sku.errors?.['required'] || sku.errors?.['isOnlyWhiteSpace']">
+                                    SKU of product is required.
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Name: </label>
+                            <input formControlName="name" type="text" class="form-control">
+                            <div *ngIf="name.invalid && (name.dirty||name.touched)" class="alert alert-danger mt-1">
+                                <div *ngIf="name.errors?.['required'] || name.errors?.['isOnlyWhiteSpace']">
+                                    Name of product is required.
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Description: </label>
+                            <input formControlName="description" type="text" class="form-control">
+                            <div *ngIf="description.invalid && (description.dirty||description.touched)"
+                                class="alert alert-danger mt-1">
+                                <div
+                                    *ngIf="description.errors?.['required'] || description.errors?.['isOnlyWhiteSpace']">
+                                    Description is required.
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Price: </label>
+                            <input formControlName="unit_price" type="text" class="form-control">
+                            <div *ngIf="unit_price.invalid && (unit_price.dirty||unit_price.touched)"
+                                class="alert alert-danger mt-1">
+                                <div *ngIf="unit_price.errors?.['required']">
+                                    Price is required.
+                                </div>
+                                <div *ngIf="unit_price.errors?.['pattern']">
+                                    Price must be number.
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Unit: </label>
+                            <input formControlName="unit_in_stock" type="text" class="form-control">
+                            <div *ngIf="unit_in_stock.invalid && (unit_in_stock.dirty||unit_in_stock.touched)"
+                                class="alert alert-danger mt-1">
+                                <div *ngIf="unit_in_stock.errors?.['required']">
+                                    Unit is required.
+                                </div>
+                                <div *ngIf="unit_in_stock.errors?.['pattern']">
+                                    Unit must be number.
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <button type="submit" class="btn btn-dark mb-2">Add product</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- product list -->
+    <div class="section-content section-content-p30 mt-5">
+        <div class="table-responsive" style="max-height: 400px; overflow-y: auto;">
+            <table class="table table-hover">
+                <thead class="table-dark">
+                    <tr>
+                        <th scope="col">Product ID</th>
+                        <th scope="col">Product Name</th>
+                        <th scope="col">Product Description</th>
+                        <th scope="col">Product Price</th>
+                        <th scope="col">Product Unit</th>
+                        <th scope="col">Edit</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let tempProduct of products">
+                        <td>{{tempProduct.id}}</td>
+                        <td><input type="text" [(ngModel)]="tempProduct.name"></td>
+                        <td><input type="text" [(ngModel)]="tempProduct.description"></td>
+                        <td><input type="number" [(ngModel)]="tempProduct.unit_price">
+                        </td>
+                        <td><input type="number" [(ngModel)]="tempProduct.unit_in_stock"></td>
+                        <td>
+                            <button class="btn btn-success" (click)="saveUpdateProduct(tempProduct)">Update</button>
+                            <button class="btn btn-danger" (click)="deleteProduct(tempProduct.id)">Delete</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="d-flex justify-content-center align-items-center">
+            <button class="btn btn-dark mt-3 mb-3 " (click)="exportToPDF()">Export to PDF</button>
+        </div>
+        <div class="d-flex justify-content-center align-items-center">
+            <button class="btn btn-dark mt-3 mb-3" (click)="logout()">Logout</button>
+        </div>
+    </div>
+</div>

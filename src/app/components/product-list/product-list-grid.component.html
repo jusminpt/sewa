@@ -1,0 +1,47 @@
+<div class="main-content">
+    <div class="section-content section-content-p30">
+        <div *ngIf="current_category_name">
+            <h4>Category: {{current_category_name}}</h4>
+            <hr>
+        </div>
+        <div class="container-fluid">
+            <div class="row">
+                <div *ngFor="let tempProduct of products" class="col-md-3 d-flex justify-content-center">
+                    <div class="card border-0" style="width: 18rem;">
+                        <a routerLink="/products/{{tempProduct.id}}">
+                            <img class="card-img-top img-responsive" src="{{tempProduct.image_url}}"
+                                alt="Card image cap">
+                        </a>
+                        <div class="card-body">
+                            <a routerLink="/products/{{tempProduct.id}}" style="text-decoration: none; color: black;">
+                                <p class="card-title">{{tempProduct.name}}</p>
+                                <p class="card-text" style="font-weight: 900;">{{tempProduct.unit_price |
+                                    currency:"USD"}}</p>
+                            </a>
+
+                        </div>
+                        <button (click)="addToCart(tempProduct)" class="btn btn-dark mb-5">Add to cart</button>
+                    </div>
+                </div>
+                <!-- if no product found -->
+                <div *ngIf="products?.length == 0" class="alert alert-warning col-md-12" role="alert">
+                    No product found, please try again.
+                </div>
+            </div>
+            <!-- add pagination -->
+            <div class="container">
+                <div class="row">
+                    <div class="col"></div>
+                    <div class="col"></div>
+                    <div class="col">
+                        <ngb-pagination [(page)]="page_number" [pageSize]="page_size"
+                            [collectionSize]="page_total_elements" (pageChange)="listProducts()"></ngb-pagination>
+                    </div>
+                    <div class="col"></div>
+                    <div class="col"></div>
+                </div>
+            </div>
+            <!-- end pagination -->
+        </div>
+    </div>
+</div>

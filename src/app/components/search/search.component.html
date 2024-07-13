@@ -1,0 +1,8 @@
+<div class="form-header" onsubmit="return false;" method="GET">
+    <input #inputSearch type="text" placeholder="Search for brand, color, and etc." class="au-input au-input-xl"
+        (keyup.enter)="searchProduct(inputSearch.value)" />
+
+    <button (click)="searchProduct(inputSearch.value)" class="au-btn-submit">
+        Search
+    </button>
+</div>
